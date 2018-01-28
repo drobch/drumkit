@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <section class="main bgimage">
+
+        <div class="keys">
+
+            <div class="keys__item" data-key="65">
+                <kbd class="keys__item__kbd">A</kbd>
+                <span class="sound">clap</span>
+            </div>
+            <div class="keys__item" data-key="83">
+                <kbd class="keys__item__kbd">S</kbd>
+                <span class="sound">hihat</span>
+            </div>
+            <div class="keys__item" data-key="68">
+                <kbd class="keys__item__kbd">D</kbd>
+                <span class="sound">kick</span>
+            </div>
+
+            <div class="keys__item" data-key="70">
+                <kbd class="keys__item__kbd">F</kbd>
+                <span class="sound">openhat</span>
+            </div>
+            <div class="keys__item" data-key="71">
+                <kbd class="keys__item__kbd">G</kbd>
+                <span class="sound">snare</span>
+            </div>
+            <div class="keys__item" data-key="72">
+                <kbd class="keys__item__kbd">H</kbd>
+                <span class="sound">tom</span>
+            </div>
+            <div class="keys__item" data-key="74">
+                <kbd class="keys__item__kbd">J</kbd>
+                <span class="sound">shaker</span>
+            </div>
+            <div class="keys__item" data-key="75">
+                <kbd class="keys__item__kbd">K</kbd>
+                <span class="sound">crush</span>
+            </div>
+            <div class="keys__item" data-key="76">
+                <kbd class="keys__item__kbd">L</kbd>
+                <span class="sound">ride</span>
+            </div>
+        </div>
+
+    </section>
+
+    <audio src="src/samples/clap-tape.wav" data-key="65" ></audio>
+    <audio src="src/samples/hihat-acoustic01.wav" data-key="83" ></audio>
+    <audio src="src/samples/kick-acoustic02.wav" data-key="68" ></audio>
+    <audio src="src/samples/openhat-acoustic01.wav" data-key="70" ></audio>
+    <audio src="src/samples/snare-808.wav" data-key="71"></audio>
+    <audio src="src/samples/tom-acoustic01.wav" data-key="72"></audio>
+    <audio src="src/samples/shaker-analog.wav" data-key="74"></audio>
+    <audio src="src/samples/crash-acoustic.wav" data-key="75"></audio>
+    <audio src="src/samples/ride-acoustic01.wav" data-key="76"></audio>
+
+
+    <script>
+        window.addEventListener("keydown", playSound);
+
+        function playSound(e) {
+            const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+            const key = document.querySelector(`.keys__item[data-key="${e.keyCode}"]`);
+            if(!audio) return;
+            audio.currentTime = 0;
+            audio.play();
+            key.classList.add("playing");
+        };
+
+        function removeTransition(e) {
+          if(e.propertyName !== "transform") return;
+          this.classList.remove("playing");
+        };
+
+        const keys = document.querySelectorAll(".keys__item");
+
+        keys.forEach(key => key.addEventListener("transitionend", removeTransition));
+
+    </script>
+</body>
+</html>
